@@ -5,20 +5,40 @@ This script provides handy PowerShell functions to speed up Django development.
 Instead of typing long `python manage.py` commands, you can use simple shortcuts like `run`, `migrate`, `superuser`, etc.
 
 -------------------------------------------------------------------
-📌 Setup Instructions
+## PowerShell Profile Setup
 
-1. Check if your PowerShell profile exists:
-   test-path $PROFILE
-
-   If it returns False, create one:
+1. **Check if your profile exists** (run in PowerShell):
+   ```powershell
+   Test-Path $PROFILE
+   ```
+   If this returns `False`, create one:
+   ```powershell
    New-Item -Path $PROFILE -ItemType File -Force
+   ```
 
-2. Open your profile in Notepad:
-   notepad $PROFILE
+2. **Open the profile** (use either option):
+   - With Notepad:
+     ```powershell
+     notepad $PROFILE
+     ```
+   - With VS Code:
+     ```powershell
+     code $PROFILE
+     ```
 
-3. Paste this entire script into the profile file and save it.
+3. **Paste your script** into the opened file and save (`Ctrl+S`).
 
-4. Restart PowerShell. Done ✅
+4. **Verify the profile path** (optional):
+   ```powershell
+   Write-Output "Profile location: $PROFILE"
+   ```
+
+5. **Restart PowerShell** or reload with:
+   ```powershell
+   . $PROFILE
+   ```
+
+> 💡 Note: The `. $PROFILE` command reloads your profile without restarting the terminal.
 
 -------------------------------------------------------------------
 📦 Available Commands
