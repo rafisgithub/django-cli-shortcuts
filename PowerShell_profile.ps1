@@ -15,7 +15,7 @@ function seed {
 }
 
 function flush {
-  python manage.py flush
+  python manage.py flush --no-input
 }
 
 function superuser {
