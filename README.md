@@ -39,5 +39,5 @@ Instead of typing long `python manage.py` commands, you can use simple shortcuts
 
 5. **Restart PowerShell** or reload with:
    ```powershell
-   . $PROFILE
+   . $PROFILE.CurrentUserAllHosts
    ```
