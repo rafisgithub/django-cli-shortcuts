@@ -19,11 +19,15 @@ Instead of typing long `python manage.py` commands, you can use simple shortcuts
 2. **Open the profile** (use either option):
    - With Notepad:
      ```powershell
-     notepad $PROFILE
+     notepad $PROFILE.CurrentUserAllHosts
      ```
    - With VS Code:
      ```powershell
-     code $PROFILE
+     code $PROFILE.CurrentUserAllHosts
+     ```
+   - With Antigravity:
+     ```powershell
+     antigravity $PROFILE.CurrentUserAllHosts
      ```
 
 3. **Paste your script** into the opened file and save (`Ctrl+S`).
