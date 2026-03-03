@@ -9,7 +9,7 @@ Instead of typing long `python manage.py` commands, you can use simple shortcuts
 
 1. **Check if your profile exists** (run in PowerShell):
    ```powershell
-   TTest-Path $PROFILE.CurrentUserAllHosts
+   Test-Path $PROFILE.CurrentUserAllHosts
    ```
    If this returns `False`, create one:
    ```powershell
