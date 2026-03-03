@@ -9,11 +9,11 @@ Instead of typing long `python manage.py` commands, you can use simple shortcuts
 
 1. **Check if your profile exists** (run in PowerShell):
    ```powershell
-   Test-Path $PROFILE
+   TTest-Path $PROFILE.CurrentUserAllHosts
    ```
    If this returns `False`, create one:
    ```powershell
-   New-Item -Path $PROFILE -ItemType File -Force
+   New-Item -Path $PROFILE.CurrentUserAllHosts -ItemType File -Force
    ```
 
 2. **Open the profile** (use either option):
