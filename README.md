@@ -1,43 +1,43 @@
-<#
-🐍 Django CLI Shortcuts (PowerShell)
+Hello,
 
-This script provides handy PowerShell functions to speed up Django development.  
-Instead of typing long `python manage.py` commands, you can use simple shortcuts like `run`, `migrate`, `superuser`, etc.
+I hope you are doing well.
 
--------------------------------------------------------------------
-## PowerShell Profile Setup
+Please follow the steps below to set up the Stripe webhook and generate the webhook signing secret.
 
-1. **Check if your profile exists** (run in PowerShell):
-   ```powershell
-   Test-Path $PROFILE.CurrentUserAllHosts
-   ```
-   If this returns `False`, create one:
-   ```powershell
-   New-Item -Path $PROFILE.CurrentUserAllHosts -ItemType File -Force
-   ```
+Step 1: Login to Stripe
 
-2. **Open the profile** (use either option):
-   - With Notepad:
-     ```powershell
-     notepad $PROFILE.CurrentUserAllHosts
-     ```
-   - With VS Code:
-     ```powershell
-     code $PROFILE.CurrentUserAllHosts
-     ```
-   - With Antigravity:
-     ```powershell
-     antigravity $PROFILE.CurrentUserAllHosts
-     ```
+1. Go to [https://dashboard.stripe.com](https://dashboard.stripe.com)
+2. Log in to your Stripe account.
 
-3. **Paste your script** into the opened file and save (`Ctrl+S`).
+Step 2: Create Webhook Endpoint
 
-4. **Verify the profile path** (optional):
-   ```powershell
-   Write-Output "Profile location: $PROFILE"
-   ```
+3. From the left sidebar, click Developers.
+4. Click on Webhooks.
+5. Click “Add endpoint”.
+6. In the Endpoint URL field, enter the following URL:
 
-5. **Restart PowerShell** or reload with:
-   ```powershell
-   . $PROFILE.CurrentUserAllHosts
-   ```
+   [http://dashboard.vantafy.com/api/stripe-webhook/](http://dashboard.vantafy.com/api/stripe-webhook/)
+
+7. Under Events to send, click Select events and choose the following events:
+
+   - checkout.session.completed
+   - customer.subscription.created
+   - customer.subscription.updated
+   - customer.subscription.deleted
+   - invoice.paid
+   - invoice.payment_failed
+
+8. Click Add endpoint.
+
+### Step 3: Get Webhook Signing Secret
+
+9. After the endpoint is created, click on it from the list.
+10. In the Signing secret section, click Reveal.
+11. Copy the Webhook Signing Secret (it starts with `whsec_`).
+
+Please share this webhook secret with us so we can properly configure the subscription webhook on the server.
+
+If you face any issue during the setup, feel free to let me know.
+
+Best regards,
+
