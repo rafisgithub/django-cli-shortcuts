@@ -70,3 +70,18 @@ function venv {
         python -m venv venv
     }
 }
+
+
+function work {
+    param([string]$ProjectName = "stoweb")
+
+    celery -A $ProjectName worker --loglevel=info --pool=threads --concurrency=10
+}
+
+function beat {
+    param([string]$ProjectName = "stoweb")
+
+    celery -A $ProjectName beat `
+        --loglevel=info `
+        --scheduler django_celery_beat.schedulers:DatabaseScheduler
+}
