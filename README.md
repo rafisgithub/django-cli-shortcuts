@@ -1,43 +1,119 @@
-Hello,
+```powershell
+# --------------------------
+# Django CLI Shortcuts
+# --------------------------
 
-I hope you are doing well.
+<#
+Examples:
+run               # starts server on default (127.0.0.1:8000)
+run 9000          # starts server on port 9000
+migrate           # applies migrations
+superuser         # creates a Django superuser
+activate          # activates default "venv"
+activate myenv    # activates a custom env "myenv"
+freeze            # saves dependencies to requirements.txt
+requirements      # installs from requirements.txt
+venv myenv        # creates a virtualenv named myenv
+#>
 
-Please follow the steps below to set up the Stripe webhook and generate the webhook signing secret.
+function run {
+    param([string]$Port)
 
-Step 1: Login to Stripe
+    if ($Port) {
+        python manage.py runserver 0.0.0.0:$Port
+    }
+    else {
+        python manage.py runserver
+    }
+}
 
-1. Go to [https://dashboard.stripe.com](https://dashboard.stripe.com)
-2. Log in to your Stripe account.
+function seed {
+    python manage.py seed
+}
 
-Step 2: Create Webhook Endpoint
+function flushdb {
+    python manage.py flush
+}
 
-3. From the left sidebar, click Developers.
-4. Click on Webhooks.
-5. Click “Add endpoint”.
-6. In the Endpoint URL field, enter the following URL:
+function superuser {
+    python manage.py createsuperuser
+}
 
-   [http://dashboard.vantafy.com/api/stripe-webhook/](http://dashboard.vantafy.com/api/stripe-webhook/)
+function migrations {
+    python manage.py makemigrations @args
+}
 
-7. Under Events to send, click Select events and choose the following events:
+function migrate {
+    python manage.py migrate @args
+}
 
-   - checkout.session.completed
-   - customer.subscription.created
-   - customer.subscription.updated
-   - customer.subscription.deleted
-   - invoice.paid
-   - invoice.payment_failed
+function collectstatic {
+    python manage.py collectstatic @args
+}
 
-8. Click Add endpoint.
+function shell {
+    python manage.py shell
+}
 
-### Step 3: Get Webhook Signing Secret
+function activate {
+    param([string]$EnvName)
 
-9. After the endpoint is created, click on it from the list.
-10. In the Signing secret section, click Reveal.
-11. Copy the Webhook Signing Secret (it starts with `whsec_`).
+    if ($EnvName) {
+        & ".\$EnvName\Scripts\Activate.ps1"
+    }
+    else {
+        & ".\venv\Scripts\Activate.ps1"
+    }
+}
 
-Please share this webhook secret with us so we can properly configure the subscription webhook on the server.
+function freeze {
+    param([string]$OutputFile)
 
-If you face any issue during the setup, feel free to let me know.
+    if ($OutputFile) {
+        pip freeze > $OutputFile
+    }
+    else {
+        pip freeze > requirements.txt
+    }
+}
 
-Best regards,
+function requirements {
+    param([string]$RequirementsFile)
 
+    if ($RequirementsFile) {
+        pip install -r $RequirementsFile
+    }
+    else {
+        pip install -r requirements.txt
+    }
+}
+
+function venv {
+    param([string]$EnvName)
+
+    if ($EnvName) {
+        python -m venv $EnvName
+    }
+    else {
+        python -m venv venv
+    }
+}
+
+# --------------------------
+# Celery Shortcuts
+# --------------------------
+
+function work {
+    param([string]$ProjectName = "stoweb")
+
+    celery -A $ProjectName worker --loglevel=info --pool=threads --concurrency=10
+}
+
+function beat {
+    param([string]$ProjectName = "stoweb")
+
+    celery -A $ProjectName beat `
+        --loglevel=info `
+        --scheduler django_celery_beat.schedulers:DatabaseScheduler
+}
+```
