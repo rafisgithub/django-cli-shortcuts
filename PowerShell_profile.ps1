@@ -72,11 +72,27 @@ function venv {
 }
 
 
-function work {
-    param([string]$ProjectName = "stoweb")
+# function work {
+#     param([string]$ProjectName = "stoweb")
 
-    celery -A $ProjectName worker --loglevel=info --pool=threads --concurrency=10
+#     celery -A $ProjectName worker --loglevel=info --pool=threads --concurrency=10
+# }
+
+function worker {
+    param([string]$app = "stoweb")
+ 
+    celery -A $app worker `
+        --loglevel=info `
+        --queues=execute `
+        --pool=threads `
+        --concurrency=100 `
+        --max-tasks-per-child=500 `
+        -Ofair `
+        --hostname=execute@%h `
+        --without-gossip `
+        --without-mingle
 }
+
 
 function beat {
     param([string]$ProjectName = "stoweb")
