@@ -22,7 +22,7 @@ function superuser {
     python manage.py createsuperuser
 }
 
-function migrations {
+function makemigrations {
     python manage.py makemigrations @args
 }
 
@@ -72,32 +72,22 @@ function venv {
 }
 
 
-# function work {
-#     param([string]$ProjectName = "stoweb")
-
-#     celery -A $ProjectName worker --loglevel=info --pool=threads --concurrency=10
-# }
-
 function worker {
     param([string]$app = "stoweb")
- 
+
     celery -A $app worker `
         --loglevel=info `
-        --queues=execute `
         --pool=threads `
         --concurrency=100 `
         --max-tasks-per-child=500 `
         -Ofair `
-        --hostname=execute@%h `
+        --hostname=worker@%h `
         --without-gossip `
         --without-mingle
 }
 
-
 function beat {
-    param([string]$ProjectName = "stoweb")
+    param([string]$app="stoweb")
 
-    celery -A $ProjectName beat `
-        --loglevel=info `
-        --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    celery -A $app beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 }
