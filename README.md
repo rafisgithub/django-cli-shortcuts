@@ -1,4 +1,8 @@
-# PowerShell Profile Setup
+# Django CLI Shortcuts
+
+Shell functions that wrap common `manage.py` / `pip` / `celery` commands so you can type `run`, `migrate`, `worker`, etc. instead of the full command.
+
+## Windows (PowerShell)
 
 ### 1. Check if your PowerShell profile exists
 ```powershell
@@ -31,7 +35,7 @@ You can open it using one of the following editors:
 
 ### 3. Add your Django shortcuts
 
-Paste your custom PowerShell functions into the file, then save it (`Ctrl + S`).
+Paste the contents of [`PowerShell_profile.ps1`](PowerShell_profile.ps1) into the file, then save it (`Ctrl + S`).
 
 ### 4. Verify profile location (optional)
 ```powershell
@@ -45,6 +49,38 @@ Restart PowerShell, or reload the profile manually:
 . $PROFILE.CurrentUserAllHosts
 ```
 
- **Done!**
+**Done!** Your Django CLI shortcuts are now ready to use.
 
-Your Django CLI shortcuts are now ready to use.
+---
+
+## Ubuntu / Linux (Bash / Zsh)
+
+### 1. Locate your shell's rc file
+
+- Bash: `~/.bashrc`
+- Zsh: `~/.zshrc`
+
+### 2. Add your Django shortcuts
+
+Append the contents of [`bash_profile.sh`](bash_profile.sh) to your rc file:
+```bash
+cat bash_profile.sh >> ~/.bashrc   # or ~/.zshrc
+```
+
+Or open the rc file in an editor and paste the functions in manually:
+```bash
+nano ~/.bashrc      # or: code ~/.bashrc
+```
+
+### 3. Reload your shell
+
+```bash
+source ~/.bashrc    # or: source ~/.zshrc
+```
+
+### 4. Verify it worked
+```bash
+type run
+```
+
+**Done!** Your Django CLI shortcuts are now ready to use.
